@@ -14,13 +14,12 @@ function updatePlot() {
     //d3.event.preventDefault();
     // Use D3 to select the dropdown menu
     var dropdownMenu = d3.select("#selDataset").node().value;
-    // Assign the value of the dropdown menu option to a variable
-    //var dropdownValue = dropdownMenu.property("value");
-   
+  
     // Build the plot with the new stock
     buildPlot(dropdownMenu);
   }
 
+//Append IDs to dropdown menu
 var dropdownValues = d3.json(dataset).then((data) => {
   var id = data.names;
   console.log(id);
@@ -32,7 +31,7 @@ var dropdownValues = d3.json(dataset).then((data) => {
 
 console.log(dropdownValues);
 
-// Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
+// Build plots
 function buildPlot(subID) {
     var dataset = "samples.json";
 
@@ -43,10 +42,14 @@ function buildPlot(subID) {
     var subjectID = samples.map(row => row.id).indexOf(subID);
     console.log(subjectID);
     
+    //Horizontal bar chart
+    //Sample values
     var sampleValues = samples.map(row => row.sample_values);
     var sampleVals = sampleValues[subjectID].slice(0,10).reverse();
+    //OTU IDS
     var otuIds = data.samples.map(row => row.otu_ids);
     var otuIdsSub = otuIds[subjectID].slice(0,10);
+    //OTU Labels
     var otuLabels = data.samples.map(row => row.otu_labels);
     var otuLabelsSub = otuLabels[subjectID].slice(0,10);
     console.log(sampleValues);
@@ -61,10 +64,12 @@ function buildPlot(subID) {
         x: sampleVals,
         y: otuIdsSub,
         orientation: 'h',
-        text: otuLabelsSub
-    }
+        text: otuLabelsSub,
+        marker: {
+          color: 'rgb(82,188,163)'}
+    };
 
-    var data = [trace1];
+    var data1 = [trace1];
 
     var layout = {
         title: `Belly`,
@@ -76,11 +81,35 @@ function buildPlot(subID) {
         }
       };
 
-    Plotly.newPlot('bar', data, layout);
+    Plotly.newPlot('bar', data1, layout);
+
     // Bubble chart
+    var trace2 = {
+      x: otuIdsSub,
+      y: sampleVals,
+      mode: 'markers',
+      text: otuLabelsSub,
+      marker: {
+        size: sampleVals,
+        color: otuIdsSub
+      }
+    };
+
+    var data2 = [trace2];
+
+    Plotly.newPlot('bubble', data2);
+    
+    // Metadata
+    var metaData = data.metadata;
+    console.log(metaData);
 
     // Demographic Info
-
+    var demData = d3.select('#sample-metadata');
+    demData.html('');
+    
+    Object.entries(metaData[subjectID]).forEach(([key, value]) => {
+      demData.append('p').text(`${key.toUpperCase()}:\n${value}`);
+    });
 
     });
 }

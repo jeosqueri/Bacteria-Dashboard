@@ -72,12 +72,15 @@ function buildPlot(subID) {
     var data1 = [trace1];
 
     var layout = {
-        title: `Belly`,
+        title: `Top 10 OTUs`,
         xaxis: {
-          title: 'Sample Values'
+          title: 'Sample Values',
+          automargin: true
         },
         yaxis: {
-          title: 'Sub IDS'
+          title: 'OTU IDS',
+          automargin: true,
+          type: 'category'
         }
       };
 
@@ -91,14 +94,27 @@ function buildPlot(subID) {
       text: otuLabelsSub,
       marker: {
         size: sampleVals,
-        color: otuIdsSub
+        color: otuIdsSub,
+        sizeref: 0.2,
+        sizemode: 'area'
       }
     };
 
     var data2 = [trace2];
 
     Plotly.newPlot('bubble', data2);
-    
+    // Pie chart
+
+    // var trace3 = [{
+    //   values: sampleVals,
+    //   labels: otuLabelsSub,
+    //   type: 'pie'
+    // }];
+
+    // var data3 = [trace3];
+
+    // Plotly.newPlot('pie', data3);
+
     // Metadata
     var metaData = data.metadata;
     console.log(metaData);

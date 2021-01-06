@@ -5,11 +5,6 @@ d3.json(dataset).then(function(data) {
     console.log(data);    //work with data inside this
   });
 
-// function unpack(rows, index) {
-//     return rows.map(function(row) {
-//     return row[index];
-//     });
-//     }
 // Call updatePlotly() when a change takes place to the DOM
 d3.selectAll("#selDataset").on("change", updatePlot);
 
@@ -74,16 +69,19 @@ function buildPlot(subID) {
     var layout = {
         title: `Belly`,
         xaxis: {
-          range: [0,11],
-          type: "date"
+          title: 'Sample Values'
         },
         yaxis: {
-          autorange: true,
-          type: "linear"
+          title: 'Sub IDS'
         }
       };
 
-    Plotly.newPlot('#selDataset', data, layout);
+    Plotly.newPlot('bar', data, layout);
+    // Bubble chart
+
+    // Demographic Info
+
+
     });
 }
 // Call updatePlotly() when a change takes place to the DOM

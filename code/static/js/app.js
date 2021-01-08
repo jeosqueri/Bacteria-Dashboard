@@ -144,26 +144,30 @@ function buildPlot(subID) {
     console.log(washFreqSub);
 
     var traceGauge = [{
-      domain: {x: [0,10], y: [0,10]},
+      domain: {x: [0,9], y: [0,9]},
       value: washFreqSub,
       title: { text: "Belly Button Washing Frequency"},
+      values: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
       text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
       textposition: 'inside',
       type: 'indicator',
       mode: "gauge+number",
+      marker: {
+        labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9']
+      },
       gauge: {
         axis: {range: [0,10]},
         bar: {thickness: 0},
         steps: [
-          {name: '0-1', range: [0,1], color: 'rgb(254, 245, 231)'},
-          {name: '1-2', range: [1,2], color: 'rgb(253, 235, 208)'},
-          {name: '2-3', range: [2,3], color: 'rgb(234, 250, 241)'}, 
-          {name: '3-4', range: [3,4], color: 'rgb(233, 247, 239)'}, 
-          {name:'4-5', range: [4,5], color: 'rbg(212, 239, 223)'}, 
-          {name: '5-6', range: [5,6], color:'rgb(213, 245, 227)'}, 
-          {name:'6-7', range: [6,7], color:'rbg(125, 206, 160)'}, 
-          {name:'7-8', range: [7,8], color:'rgb(82, 190, 128)'}, 
-          {name:'8-9', range: [8,9], color:'rbg(39, 174, 96)'}
+          {name: '0-1', range: [0,1], color: 'rgb(253, 242, 233)'},
+          {name: '1-2', range: [1,2], color: 'rgb(250, 229, 211)'},
+          {name: '2-3', range: [2,3], color: 'rgb(245, 203, 167)'}, 
+          {name: '3-4', range: [3,4], color: 'rgb(233, 247, 239 )'}, 
+          {name:'4-5', range: [4,5], color: 'rgb(212, 239, 223)'}, 
+          {name: '5-6', range: [5,6], color:'rgb(169, 223, 191)'}, 
+          {name:'6-7', range: [6,7], color:'rgb(125, 206, 160)'}, 
+          {name:'7-8', range: [7,8], color:'rgb(130, 224, 170)'}, 
+          {name:'8-9', range: [8,9], color:'rgb(88, 214, 141)'}
         ]
       }
     }];

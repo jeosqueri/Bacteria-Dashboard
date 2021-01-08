@@ -44,7 +44,7 @@ function buildPlot(subID) {
     //Horizontal bar chart
     //Sample values
     var sampleValues = samples.map(row => row.sample_values);
-    var sampleVals = sampleValues[subjectID].slice(0,10).reverse();
+    var sampleVals = sampleValues[subjectID].slice(0,10);
     //OTU IDS
     var otuIds = data.samples.map(row => row.otu_ids);
     var otuIdsSub = otuIds[subjectID].slice(0,10);
@@ -119,16 +119,16 @@ function buildPlot(subID) {
 
     Plotly.newPlot('bubble', data2, layout2);
     // Pie chart
+    //fix this
+    var trace3 = {
+      values: otuIdsSub,
+      labels: otuIdsSub,
+      type: 'pie'
+    };
 
-    // var trace3 = [{
-    //   values: sampleVals,
-    //   labels: sampleVals,
-    //   type: 'pie'
-    // }];
+    var data3 = [trace3];
 
-    // var data3 = [trace3];
-
-    // Plotly.newPlot('pie', data3);
+    Plotly.newPlot('pie', data3);
 
     // Metadata
     var metaData = data.metadata;
@@ -149,7 +149,7 @@ function buildPlot(subID) {
     console.log(washFreqSub);
 
     var traceGauge = [{
-      type: "pie",
+      domain: {x: [0,9], y: [0,9]},
       value: washFreqSub,
       title: { text: "Belly Button Washing Frequency"},
       values: [81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81],
@@ -163,8 +163,12 @@ function buildPlot(subID) {
         hoverinfo: 'label'
       },
       gauge: {
-        axis: {range: [0,10]},
+        axis: {range: [0,9], ticks: 'inside'},
         bar: {thickness: 0},
+        threshold: {
+          line: { color: "red", width: 4 },
+          thickness: 0.75,
+          value: washFreqSub},
         steps: [
           {name: '0-1', range: [0,1], color: 'rgb(253, 242, 233)'},
           {name: '1-2', range: [1,2], color: 'rgb(250, 229, 211)'},

@@ -5,9 +5,6 @@ d3.json(dataset).then(function(data) {
     console.log(data);    //work with data inside this
   });
 
-// Call updatePlotly() when a change takes place to the DOM
-d3.selectAll("#selDataset").on("change", updatePlot);
-
 // Dropdown
 function updatePlot() {
     // Prevent the page from refreshing
@@ -41,6 +38,8 @@ function buildPlot(subID) {
     console.log(samples);
     var subjectID = samples.map(row => row.id).indexOf(subID);
     console.log(subjectID);
+    var subjectIDNum = samples.map(row => row.id);
+    console.log(subjectIDNum);
     
     //Horizontal bar chart
     //Sample values
@@ -49,6 +48,7 @@ function buildPlot(subID) {
     //OTU IDS
     var otuIds = data.samples.map(row => row.otu_ids);
     var otuIdsSub = otuIds[subjectID].slice(0,10);
+    var otuIdsText = otuIdsSub.map(id => `OTU `+id);
     //OTU Labels
     var otuLabels = data.samples.map(row => row.otu_labels);
     var otuLabelsSub = otuLabels[subjectID].slice(0,10);
@@ -62,7 +62,7 @@ function buildPlot(subID) {
     var trace1 = {
         type: 'bar',
         x: sampleVals,
-        y: otuIdsSub,
+        y: otuIdsText,
         orientation: 'h',
         text: otuLabelsSub,
         marker: {
@@ -87,6 +87,7 @@ function buildPlot(subID) {
     Plotly.newPlot('bar', data1, layout);
 
     // Bubble chart
+    
     var trace2 = {
       x: otuIdsSub,
       y: sampleVals,
@@ -102,12 +103,16 @@ function buildPlot(subID) {
 
     var data2 = [trace2];
 
-    Plotly.newPlot('bubble', data2);
+    var layout2 = {
+      title: `Subject ${subID} Sample Values`
+    }
+
+    Plotly.newPlot('bubble', data2, layout2);
     // Pie chart
 
     // var trace3 = [{
     //   values: sampleVals,
-    //   labels: otuLabelsSub,
+    //   labels: sampleVals,
     //   type: 'pie'
     // }];
 
@@ -126,6 +131,42 @@ function buildPlot(subID) {
     Object.entries(metaData[subjectID]).forEach(([key, value]) => {
       demData.append('p').text(`${key.toUpperCase()}:\n${value}`);
     });
+
+    // Gauge chart
+    var washFreq = metaData.map(row => row.wfreq);
+    console.log(washFreq);
+    var washFreqSub = washFreq[subjectID];
+    console.log(washFreqSub);
+
+    var dataGauge = [{
+      domain: {x: [0,10], y: [0,10]},
+      value: washFreqSub,
+      title: { text: "Belly Button Washing Frequency"},
+      text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
+      textposition: 'inside',
+      type: 'indicator',
+      mode: "gauge+number",
+      gauge: {
+        axis: {range: [0,10]},
+        bar: {
+          thickness: 0
+        },
+        steps: [
+          {name: '0-1', range: [0,1], color: 'rgb(254, 245, 231)'},
+        {name: '1-2', range: [1,2], color: 'rgb(253, 235, 208)'},
+        {name: '2-3', range: [2,3], color: 'rgb(234, 250, 241)'}, 
+        {name: '3-4', range: [3,4], color: 'rgb(233, 247, 239)'}, 
+        {name:'4-5', range: [4,5], color: 'rbg(212, 239, 223)'}, 
+        {name: '5-6', range: [5,6], color:'rgb(213, 245, 227)'}, 
+        {name:'6-7', range: [6,7], color:'rbg(125, 206, 160)'}, 
+        {name:'7-8', range: [7,8], color:'rgb(82, 190, 128)'}, 
+        {name:'8-9', range: [8,9], color:'rbg(39, 174, 96)'}
+      ]
+      }
+    }];
+
+    Plotly.newPlot('gauge', dataGauge);
+
 
     });
 }

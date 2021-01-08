@@ -138,7 +138,7 @@ function buildPlot(subID) {
     var washFreqSub = washFreq[subjectID];
     console.log(washFreqSub);
 
-    var dataGauge = [{
+    var traceGauge = [{
       domain: {x: [0,10], y: [0,10]},
       value: washFreqSub,
       title: { text: "Belly Button Washing Frequency"},
@@ -148,29 +148,24 @@ function buildPlot(subID) {
       mode: "gauge+number",
       gauge: {
         axis: {range: [0,10]},
-        bar: {
-          thickness: 0
-        },
+        bar: {thickness: 0},
         steps: [
           {name: '0-1', range: [0,1], color: 'rgb(254, 245, 231)'},
-        {name: '1-2', range: [1,2], color: 'rgb(253, 235, 208)'},
-        {name: '2-3', range: [2,3], color: 'rgb(234, 250, 241)'}, 
-        {name: '3-4', range: [3,4], color: 'rgb(233, 247, 239)'}, 
-        {name:'4-5', range: [4,5], color: 'rbg(212, 239, 223)'}, 
-        {name: '5-6', range: [5,6], color:'rgb(213, 245, 227)'}, 
-        {name:'6-7', range: [6,7], color:'rbg(125, 206, 160)'}, 
-        {name:'7-8', range: [7,8], color:'rgb(82, 190, 128)'}, 
-        {name:'8-9', range: [8,9], color:'rbg(39, 174, 96)'}
-      ]
+          {name: '1-2', range: [1,2], color: 'rgb(253, 235, 208)'},
+          {name: '2-3', range: [2,3], color: 'rgb(234, 250, 241)'}, 
+          {name: '3-4', range: [3,4], color: 'rgb(233, 247, 239)'}, 
+          {name:'4-5', range: [4,5], color: 'rbg(212, 239, 223)'}, 
+          {name: '5-6', range: [5,6], color:'rgb(213, 245, 227)'}, 
+          {name:'6-7', range: [6,7], color:'rbg(125, 206, 160)'}, 
+          {name:'7-8', range: [7,8], color:'rgb(82, 190, 128)'}, 
+          {name:'8-9', range: [8,9], color:'rbg(39, 174, 96)'}
+        ]
       }
     }];
 
-    Plotly.newPlot('gauge', dataGauge);
-
+    Plotly.newPlot('gauge', traceGauge);
 
     });
 }
 // Call updatePlotly() when a change takes place to the DOM
 d3.selectAll("#selDataset").on("change", updatePlot);
-
-//updatePlot();

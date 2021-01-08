@@ -72,13 +72,12 @@ function buildPlot(subID) {
     var data1 = [trace1];
 
     var layout = {
-        title: `Top 10 OTUs`,
+        title: `${subID}: Top 10 OTUs`,
         xaxis: {
           title: 'Sample Values',
           automargin: true
         },
         yaxis: {
-          title: 'OTU IDS',
           automargin: true,
           type: 'category'
         }
@@ -104,8 +103,14 @@ function buildPlot(subID) {
     var data2 = [trace2];
 
     var layout2 = {
-      title: `Subject ${subID} Sample Values`
-    }
+      title: `Subject ${subID}: Sample Values`,
+      xaxis: {
+        title: `OTU IDs`
+      },
+      yaxis: {
+        title: `Sample Values`
+      }
+    };
 
     Plotly.newPlot('bubble', data2, layout2);
     // Pie chart

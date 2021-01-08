@@ -144,16 +144,18 @@ function buildPlot(subID) {
     console.log(washFreqSub);
 
     var traceGauge = [{
-      domain: {x: [0,9], y: [0,9]},
+      type: "pie",
       value: washFreqSub,
       title: { text: "Belly Button Washing Frequency"},
-      values: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
+      values: [81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81],
       text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
       textposition: 'inside',
+      textinfo: 'text',
       type: 'indicator',
       mode: "gauge+number",
       marker: {
-        labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9']
+        labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
+        hoverinfo: 'label'
       },
       gauge: {
         axis: {range: [0,10]},
@@ -171,6 +173,28 @@ function buildPlot(subID) {
         ]
       }
     }];
+
+    // var degrees = 50, radius = .9
+    // var radians = degrees * Math.PI / 180
+    // var x = -1 * radius * Math.cos(radians) * wfreqNum
+    // var y = radius * Math.sin(radians)
+
+    // var gaugeLayout = {
+    //   shapes: [{
+    //     type: 'line',
+    //     x0: 0.5,
+    //     y0: 0.5,
+    //     x1: 0.6,
+    //     y1: 0.6,
+    //     line: {
+    //       color: 'black',
+    //       width: 3
+    //     }
+    //   }],
+    //   title: 'Chart',
+    //   xaxis: {visible: false, range: [-1, 1]},
+    //   yaxis: {visible: false, range: [-1, 1]}
+    // };
 
     Plotly.newPlot('gauge', traceGauge);
 

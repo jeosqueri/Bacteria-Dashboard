@@ -86,15 +86,20 @@ function buildPlot(subID) {
     Plotly.newPlot('bar', data1, layout);
 
     // Bubble chart
-    
+    var allOTUs = otuIds[subjectID];
+    console.log(allOTUs);
+    var allSampleVals = sampleValues[subjectID];
+    var allLabels = otuLabels[subjectID];
+
+
     var trace2 = {
-      x: otuIdsSub,
-      y: sampleVals,
+      x: allOTUs,
+      y: allSampleVals,
       mode: 'markers',
-      text: otuLabelsSub,
+      text: allLabels,
       marker: {
-        size: sampleVals,
-        color: otuIdsSub,
+        size: allSampleVals,
+        color: allOTUs,
         sizeref: 0.2,
         sizemode: 'area'
       }

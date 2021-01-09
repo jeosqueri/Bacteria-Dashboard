@@ -120,15 +120,25 @@ function buildPlot(subID) {
     Plotly.newPlot('bubble', data2, layout2);
     // Pie chart
     //fix this
+    var pieColors = ['#FFA07A', '#FA8072', '#E9967A', '#F08080', '#CD5C5C', '#DC143C', '#FF0000','#B22222','#8B0000', '#FF6347']
+
     var trace3 = {
       values: otuIdsSubject,
       labels: otuIdsSubject,
-      type: 'pie'
+      type: 'pie',
+      marker: {
+        colors: pieColors
+      }
     };
 
     var data3 = [trace3];
 
-    Plotly.newPlot('pie', data3);
+    var layout3 = {
+      title: `<b>Top 10 OTU % </b>`,
+      plot_bgcolor: 'rbg(253, 242, 233)'
+    }
+
+    Plotly.newPlot('pie', data3, layout3);
 
     // Metadata
     var metaData = data.metadata;
@@ -145,13 +155,13 @@ function buildPlot(subID) {
     // Gauge chart
     var washFreq = metaData.map(row => row.wfreq);
     console.log(washFreq);
-    var washFreqSub = washFreq[subjectID];
-    console.log(washFreqSub);
+    var washFreqSubject = washFreq[subjectID];
+    console.log(washFreqSubject);
 
     var traceGauge = [{
       domain: {x: [0,9], y: [0,9]},
-      value: washFreqSub,
-      title: { text: "Belly Button Washing Frequency"},
+      value: washFreqSubject,
+      title: { text: "<b>Belly Button Washing Frequency</b> <br> Scrubs per Week"},
       values: [81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81],
       text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
       textposition: 'inside',
@@ -166,19 +176,19 @@ function buildPlot(subID) {
         axis: {range: [0,9], ticks: 'inside'},
         bar: {thickness: 0},
         threshold: {
-          line: { color: "red", width: 4 },
+          line: { color: "black", width: 4 },
           thickness: 0.75,
-          value: washFreqSub},
+          value: washFreqSubject},
         steps: [
           {name: '0-1', range: [0,1], color: 'rgb(253, 242, 233)'},
           {name: '1-2', range: [1,2], color: 'rgb(250, 229, 211)'},
-          {name: '2-3', range: [2,3], color: 'rgb(245, 203, 167)'}, 
+          {name: '2-3', range: [2,3], color: 'rgb(246, 221, 204)'}, 
           {name: '3-4', range: [3,4], color: 'rgb(233, 247, 239 )'}, 
           {name:'4-5', range: [4,5], color: 'rgb(212, 239, 223)'}, 
-          {name: '5-6', range: [5,6], color:'rgb(169, 223, 191)'}, 
-          {name:'6-7', range: [6,7], color:'rgb(125, 206, 160)'}, 
-          {name:'7-8', range: [7,8], color:'rgb(130, 224, 170)'}, 
-          {name:'8-9', range: [8,9], color:'rgb(88, 214, 141)'}
+          {name: '5-6', range: [5,6], color:'rgb(171, 235, 198)'}, 
+          {name:'6-7', range: [6,7], color:'rgb(130, 224, 170)'}, 
+          {name:'7-8', range: [7,8], color:'rgb(88, 214, 141)'}, 
+          {name:'8-9', range: [8,9], color:'rgb(46, 204, 113)'}
         ]
       }
     }];

@@ -119,7 +119,6 @@ function buildPlot(subID) {
 
     Plotly.newPlot('bubble', data2, layout2);
     // Pie chart
-    //fix this
     var pieColors = ['#FFA07A', '#FA8072', '#E9967A', '#F08080', '#CD5C5C', '#DC143C', '#FF0000','#B22222','#8B0000', '#FF6347']
 
     var trace3 = {
@@ -134,7 +133,7 @@ function buildPlot(subID) {
     var data3 = [trace3];
 
     var layout3 = {
-      title: `<b>Top 10 OTU % </b>`,
+      title: `${subID}: Top 10 OTUs (%)`,
       plot_bgcolor: 'rbg(253, 242, 233)'
     }
 
@@ -192,28 +191,6 @@ function buildPlot(subID) {
         ]
       }
     }];
-
-    // var degrees = 50, radius = .9
-    // var radians = degrees * Math.PI / 180
-    // var x = -1 * radius * Math.cos(radians) * wfreqNum
-    // var y = radius * Math.sin(radians)
-
-    // var gaugeLayout = {
-    //   shapes: [{
-    //     type: 'line',
-    //     x0: 0.5,
-    //     y0: 0.5,
-    //     x1: 0.6,
-    //     y1: 0.6,
-    //     line: {
-    //       color: 'black',
-    //       width: 3
-    //     }
-    //   }],
-    //   title: 'Chart',
-    //   xaxis: {visible: false, range: [-1, 1]},
-    //   yaxis: {visible: false, range: [-1, 1]}
-    // };
 
     Plotly.newPlot('gauge', traceGauge);
 

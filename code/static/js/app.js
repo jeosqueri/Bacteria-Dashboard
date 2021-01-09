@@ -44,27 +44,27 @@ function buildPlot(subID) {
     //Horizontal bar chart
     //Sample values
     var sampleValues = samples.map(row => row.sample_values);
-    var sampleVals = sampleValues[subjectID].slice(0,10);
+    var sampleValsSubject = sampleValues[subjectID].slice(0,10);
     //OTU IDS
     var otuIds = data.samples.map(row => row.otu_ids);
-    var otuIdsSub = otuIds[subjectID].slice(0,10);
-    var otuIdsText = otuIdsSub.map(id => `OTU `+id);
+    var otuIdsSubject = otuIds[subjectID].slice(0,10);
+    var otuIdsText = otuIdsSubject.map(id => `OTU `+id);
     //OTU Labels
     var otuLabels = data.samples.map(row => row.otu_labels);
-    var otuLabelsSub = otuLabels[subjectID].slice(0,10);
+    var otuLabelsSubject = otuLabels[subjectID].slice(0,10);
     console.log(sampleValues);
-    console.log(sampleVals);
+    console.log(sampleValsSubject);
     console.log(otuIds);
-    console.log(otuIdsSub);
+    console.log(otuIdsSubject);
     console.log(otuLabels);
-    console.log(otuLabelsSub);
+    console.log(otuLabelsSubject);
 
     var trace1 = {
         type: 'bar',
-        x: sampleVals,
+        x: sampleValsSubject,
         y: otuIdsText,
         orientation: 'h',
-        text: otuLabelsSub,
+        text: otuLabelsSubject,
         marker: {
           color: 'rgb(82,188,163)'}
     };
@@ -121,8 +121,8 @@ function buildPlot(subID) {
     // Pie chart
     //fix this
     var trace3 = {
-      values: otuIdsSub,
-      labels: otuIdsSub,
+      values: otuIdsSubject,
+      labels: otuIdsSubject,
       type: 'pie'
     };
 

@@ -56,6 +56,7 @@ function buildPlot(subID) {
     console.log(sampleValsSubject);
     console.log(otuIds);
     console.log(otuIdsSubject);
+    console.log(otuIdsText);
     console.log(otuLabels);
     console.log(otuLabelsSubject);
 
@@ -79,7 +80,8 @@ function buildPlot(subID) {
         },
         yaxis: {
           automargin: true,
-          type: 'category'
+          type: 'category',
+          categoryorder: 'total ascending'
         }
       };
 
@@ -122,8 +124,8 @@ function buildPlot(subID) {
     var pieColors = ['#FFA07A', '#FA8072', '#E9967A', '#F08080', '#CD5C5C', '#DC143C', '#FF0000','#B22222','#8B0000', '#FF6347']
 
     var trace3 = {
-      values: otuIdsSubject,
-      labels: otuIdsSubject,
+      values: sampleValsSubject,
+      labels: otuIdsText,
       type: 'pie',
       marker: {
         colors: pieColors
@@ -133,7 +135,7 @@ function buildPlot(subID) {
     var data3 = [trace3];
 
     var layout3 = {
-      title: `${subID}: Top 10 OTUs (%)`,
+      title: `Top 10 OTUs: Sample Values as %`,
       plot_bgcolor: 'rbg(253, 242, 233)'
     }
 

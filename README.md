@@ -1,7 +1,5 @@
 # Plotly Homework: Belly Button Diversity
 
-*This project is currently being worked on*
-
 Overview
 ----
 For this assignment, I was tasked with building an interactive dashboard to explore a dataset of belly button biodiversity, which catalogs the microbes found in human navels.

@@ -1,22 +1,21 @@
-//  Use the D3 library to read in `samples.json`.
+//  Use the D3 library to read in `samples.json` and initialize page
 dataset = "samples.json";
 
 d3.json(dataset).then(function(data) {
-    console.log(data);    //work with data inside this
+    console.log(data);   
   });
 
-// Dropdown
+// Create dropdown menu
 function updatePlot() {
     // Prevent the page from refreshing
-    //d3.event.preventDefault();
+    d3.event.preventDefault();
     // Use D3 to select the dropdown menu
     var dropdownMenu = d3.select("#selDataset").node().value;
-  
-    // Build the plot with the new stock
+    // Call build plot function on dropdown menu
     buildPlot(dropdownMenu);
   }
 
-//Append IDs to dropdown menu
+//Append subject IDs to dropdown menu
 var dropdownValues = d3.json(dataset).then((data) => {
   var id = data.names;
   console.log(id);
@@ -28,12 +27,12 @@ var dropdownValues = d3.json(dataset).then((data) => {
 
 console.log(dropdownValues);
 
-// Build plots
+// Create function to build plots
 function buildPlot(subID) {
     var dataset = "samples.json";
 
     d3.json(dataset).then(function(data) {
-    console.log(data);    //work with data inside this
+    console.log(data);
     var samples = data.samples;
     console.log(samples);
     var subjectID = samples.map(row => row.id).indexOf(subID);
@@ -41,17 +40,18 @@ function buildPlot(subID) {
     var subjectIDNum = samples.map(row => row.id);
     console.log(subjectIDNum);
     
-    //Horizontal bar chart
-    //Sample values
+    //Create horizontal bar chart for displaying top 10 OTUs for each subject
+    //Define sample values & slice them for top 10 values
     var sampleValues = samples.map(row => row.sample_values);
     var sampleValsSubject = sampleValues[subjectID].slice(0,10);
-    //OTU IDS
+    //Define OTU IDS & slice
     var otuIds = data.samples.map(row => row.otu_ids);
     var otuIdsSubject = otuIds[subjectID].slice(0,10);
     var otuIdsText = otuIdsSubject.map(id => `OTU `+id);
-    //OTU Labels
+    //Define OTU Labels & slice
     var otuLabels = data.samples.map(row => row.otu_labels);
     var otuLabelsSubject = otuLabels[subjectID].slice(0,10);
+    //Display values in console
     console.log(sampleValues);
     console.log(sampleValsSubject);
     console.log(otuIds);
@@ -60,6 +60,7 @@ function buildPlot(subID) {
     console.log(otuLabels);
     console.log(otuLabelsSubject);
 
+    //Create trace for horizontal bar chart
     var trace1 = {
         type: 'bar',
         x: sampleValsSubject,
@@ -87,13 +88,15 @@ function buildPlot(subID) {
 
     Plotly.newPlot('bar', data1, layout);
 
-    // Bubble chart
+    // Create bubble chart that displays each sample for each subject
     var allOTUs = otuIds[subjectID];
     console.log(allOTUs);
     var allSampleVals = sampleValues[subjectID];
+    console.log(allSampleVals);
     var allLabels = otuLabels[subjectID];
+    console.log(allLabels);
 
-
+    //Create trace for bubble chart
     var trace2 = {
       x: allOTUs,
       y: allSampleVals,
@@ -120,9 +123,12 @@ function buildPlot(subID) {
     };
 
     Plotly.newPlot('bubble', data2, layout2);
-    // Pie chart
+
+    //Extra visualization: Create pie chart to display top 10 OTUs as a %
+    //Define array of colors to use in pie chart
     var pieColors = ['#FFA07A', '#FA8072', '#E9967A', '#F08080', '#CD5C5C', '#DC143C', '#FF0000','#B22222','#8B0000', '#FF6347']
 
+    //Create trace for pie chart
     var trace3 = {
       values: sampleValsSubject,
       labels: otuIdsText,
@@ -135,17 +141,16 @@ function buildPlot(subID) {
     var data3 = [trace3];
 
     var layout3 = {
-      title: `Top 10 OTUs: Sample Values as %`,
-      plot_bgcolor: 'rbg(253, 242, 233)'
-    }
+      title: `Top 10 OTUs: Sample Values as %`
+    };
 
     Plotly.newPlot('pie', data3, layout3);
 
-    // Metadata
+    //Create variable to hold metadata & display in console
     var metaData = data.metadata;
     console.log(metaData);
 
-    // Demographic Info
+    //Display each key-value pair (including demographic info) from subjects metadata in Demographic Info panel
     var demData = d3.select('#sample-metadata');
     demData.html('');
     
@@ -153,7 +158,7 @@ function buildPlot(subID) {
       demData.append('p').text(`${key.toUpperCase()}:\n${value}`);
     });
 
-    // Gauge chart
+    //BONUS: Create gauge chart to display belly button wash frequency
     var washFreq = metaData.map(row => row.wfreq);
     console.log(washFreq);
     var washFreqSubject = washFreq[subjectID];
@@ -163,10 +168,6 @@ function buildPlot(subID) {
       domain: {x: [0,9], y: [0,9]},
       value: washFreqSubject,
       title: { text: "<b>Belly Button Washing Frequency</b> <br> Scrubs per Week"},
-      values: [81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81],
-      text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
-      textposition: 'inside',
-      textinfo: 'text',
       type: 'indicator',
       mode: "gauge+number",
       marker: {

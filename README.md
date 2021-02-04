@@ -8,7 +8,7 @@ The dataset reveals that a small handful of microbial species (also called **ope
 
 Using Plotly, I was tasked with creating multiple charts and visualizations to display the data for each subject. A dropdown menu was created so users can navigate through the different subjects data by selecting their subject ID and having the dashboard display that subjects data. The plots will update anytime a new subject is selected from the dropdown menu.
 
-The deployed app for this project can be found [here.](https://jeosqueri.github.io/plotly_homework/)
+The deployed app for this project can be found [here.](https://jeosqueri.github.io/Bacteria-Dashboard/)
 
 Charts
 -----
